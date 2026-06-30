@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Центр управления проектами — Сергей Грибанов</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card-bg: #ffffff;
+    --text: #1c1f26;
+    --muted: #6b7280;
+    --green: #1aa251;
+    --yellow: #d4a017;
+    --red: #d64545;
+    --pause: #9aa0a6;
+    --leak: #b5651d;
+    --border: #e3e5e9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  header h1 {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+  header p {
+    color: var(--muted);
+    margin: 6px 0 0;
+    font-size: 13px;
+  }
+  section {
+    max-width: 1100px;
+    margin: 0 auto 36px;
+  }
+  .zone-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* ЗОНА 1 */
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+  .state-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .state-card .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    min-height: 28px;
+  }
+  .state-card .value {
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .state-card.new {
+    border: 1px solid var(--green);
+    background: #f0faf3;
+  }
+  .new-badge {
+    display: inline-block;
+    font-size: 9px;
+    background: var(--green);
+    color: #fff;
+    border-radius: 6px;
+    padding: 1px 6px;
+    margin-top: 4px;
+  }
+
+  /* ЗОНА 2 */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--pause);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .project-card.green { border-left-color: var(--green); }
+  .project-card.yellow { border-left-color: var(--yellow); }
+  .project-card.red { border-left-color: var(--red); }
+  .project-card.pause { border-left-color: var(--pause); }
+  .project-card.leak { border-left-color: var(--leak); }
+
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .project-head h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  .status-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status-pill.green { background: #e3f7e9; color: var(--green); }
+  .status-pill.yellow { background: #fbf1da; color: var(--yellow); }
+  .status-pill.red { background: #fbe6e6; color: var(--red); }
+  .status-pill.pause { background: #eceeef; color: var(--pause); }
+  .status-pill.leak { background: #f6e6d8; color: var(--leak); }
+
+  .project-card dl {
+    margin: 0;
+    font-size: 13px;
+  }
+  .project-card dt {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .project-card dd {
+    margin: 2px 0 0;
+  }
+
+  /* ЗОНА 3 */
+  .synthesis {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #1c1f26;
+    color: #fff;
+    border-radius: 12px;
+    padding: 22px 28px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .synthesis .small {
+    display: block;
+    font-size: 11px;
+    color: #9aa0a6;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 800px) {
+    .state-grid { grid-template-columns: repeat(3, 1fr); }
+    .project-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ЦЕНТР УПРАВЛЕНИЯ ПРОЕКТАМИ — СЕРГЕЙ ГРИБАНОВ</h1>
+  <p>18 июня 2026, обновлено 30 июня 2026</p>
+</header>
+
+<section>
+  <div class="zone-title">Зона 1 — Состояние основателя (голосом, раз в неделю)</div>
+  <div class="state-grid">
+    <div class="state-card">
+      <div class="label">Энергия дня</div>
+      <div class="value">7/10</div>
+    </div>
+    <div class="state-card">
+      <div class="label">Счастье за неделю</div>
+      <div class="value">8/10</div>
+    </div>
+    <div class="state-card">
+      <div class="label">Нега</div>
+      <div class="value">5 из 7</div>
+    </div>
+    <div class="state-card">
+      <div class="label">Глубокий блок</div>
+      <div class="value">5 ч</div>
+    </div>
+    <div class="state-card">
+      <div class="label">Удовлетворённость от достижений</div>
+      <div class="value">6/10</div>
+    </div>
+    <div class="state-card new">
+      <div class="label">Главная задача дня <span class="new-badge">НОВОЕ</span></div>
+      <div class="value">4 из 7</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="zone-title">Зона 2 — Проекты (7 карточек)</div>
+  <div class="project-grid">
+
+    <div class="project-card pause">
+      <div class="project-head">
+        <h3>Книга</h3>
+        <span class="status-pill pause">Пауза: нет</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>~80% готово</dd>
+        <dt>Узкое место</dt><dd>вытесняется срочным каждую неделю</dd>
+        <dt>Действие недели</dt><dd>3 защищённых часа — продвинуть черновик</dd>
+        <dt>Кто</dt><dd>Нужен Сергей</dd>
+      </dl>
+    </div>
+
+    <div class="project-card green">
+      <div class="project-head">
+        <h3>INSYTE</h3>
+        <span class="status-pill green">Светофор: авто</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>остаток на счетах — норма</dd>
+        <dt>Узкое место</dt><dd>контроль держится лично на Сергее</dd>
+        <dt>Действие недели</dt><dd>роль «хранителя стандартов»</dd>
+        <dt>Кто</dt><dd>команда (Сергей — только если 🔴)</dd>
+      </dl>
+    </div>
+
+    <div class="project-card yellow">
+      <div class="project-head">
+        <h3>INTRODESK</h3>
+        <span class="status-pill yellow">Стадия: тяга</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>0 пользователей, ждёт пилот</dd>
+        <dt>Узкое место</dt><dd>готовый продукт — нет живых пользователей</dd>
+        <dt>Действие недели</dt><dd>запустить пилот через сеть Натальи</dd>
+        <dt>Кто</dt><dd>Нужен Сергей (решение)</dd>
+      </dl>
+    </div>
+
+    <div class="project-card red">
+      <div class="project-head">
+        <h3>TELEDOCO</h3>
+        <span class="status-pill red">Стадия: не определена</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>—</dd>
+        <dt>Узкое место</dt><dd>«недоношенный ребёнок» — не отключиться</dd>
+        <dt>Действие недели</dt><dd>определить роль «мама/папа» и стадию</dd>
+        <dt>Кто</dt><dd>Нужен Сергей</dd>
+      </dl>
+    </div>
+
+    <div class="project-card red">
+      <div class="project-head">
+        <h3>HELPNEE</h3>
+        <span class="status-pill red">Стадия: не определена</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>—</dd>
+        <dt>Узкое место</dt><dd>всё держится на Сергее, нет команды</dd>
+        <dt>Действие недели</dt><dd>решение по найму / делегированию</dd>
+        <dt>Кто</dt><dd>Нужен Сергей</dd>
+      </dl>
+    </div>
+
+    <div class="project-card pause">
+      <div class="project-head">
+        <h3>Платформа «Общество Счастья»</h3>
+        <span class="status-pill pause">Пауза</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>—</dd>
+        <dt>Узкое место</dt><dd>осознанная пауза, ждёт книгу</dd>
+        <dt>Действие недели</dt><dd>нет</dd>
+        <dt>Кто</dt><dd>не применимо</dd>
+      </dl>
+    </div>
+
+    <div class="project-card leak">
+      <div class="project-head">
+        <h3>«Гора» помощи людям</h3>
+        <span class="status-pill leak">Утечка ресурса</span>
+      </div>
+      <dl>
+        <dt>Главная цифра</dt><dd>часы на чужие запросы за неделю</dd>
+        <dt>Узкое место</dt><dd>нет фильтра — снижает эффективность вдвое</dd>
+        <dt>Действие недели</dt><dd>отметить 1 историю недели для книги</dd>
+        <dt>Кто</dt><dd>Нужен Сергей</dd>
+      </dl>
+    </div>
+
+  </div>
+</section>
+
+<div class="synthesis">
+  <span class="small">Зона 3 — Синтез недели</span>
+  Если завтра ОДНА задача решится сама и исчезнет — какая даст наибольшее
+  облегчение и высвободит больше всего энергии?
+</div>
+
+</body>
+</html>
