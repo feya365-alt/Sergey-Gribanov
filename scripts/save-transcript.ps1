@@ -1,5 +1,5 @@
 ﻿param(
-    [string]$SessionId = "3dc8da91-b4e7-4ff8-b527-ec306e9f6f40"
+    [string]$SessionId = "1539e5e6-8a3d-441b-bf97-8842dcfaa6ac"
 )
 
 $projectDir = "C:\Users\Honor\.claude\projects\c--Users-Honor-Documents----------------"
