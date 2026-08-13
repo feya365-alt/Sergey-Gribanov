@@ -1,0 +1,478 @@
+<title>Архитектура и этапы — Общество Счастья</title>
+<style>
+  :root{
+    --bg: #F4F5EE;
+    --bg-raised: #ECEEE3;
+    --ink: #1B2420;
+    --muted: #5B6B60;
+    --faint: #8A968C;
+    --line: #D7DBCC;
+    --accent: #2F5D45;
+    --accent-ink: #F4F5EE;
+    --accent-soft: #E1EADD;
+    --accent2: #B5793A;
+    --accent2-soft: #F3E4CE;
+    --ok: #3E7A52;
+    --pending: #97998B;
+    --pending-bg: #E8E8DE;
+    --shadow: 0 1px 2px rgba(27,36,32,.06), 0 8px 24px rgba(27,36,32,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg: #12160F;
+      --bg-raised: #191F15;
+      --ink: #ECEFE6;
+      --muted: #9AA694;
+      --faint: #6C7A67;
+      --line: #2B3226;
+      --accent: #63A17F;
+      --accent-ink: #0E1710;
+      --accent-soft: #1E2E22;
+      --accent2: #D79A55;
+      --accent2-soft: #2E2418;
+      --ok: #6FB98A;
+      --pending: #74806D;
+      --pending-bg: #1E2419;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg: #12160F;
+    --bg-raised: #191F15;
+    --ink: #ECEFE6;
+    --muted: #9AA694;
+    --faint: #6C7A67;
+    --line: #2B3226;
+    --accent: #63A17F;
+    --accent-ink: #0E1710;
+    --accent-soft: #1E2E22;
+    --accent2: #D79A55;
+    --accent2-soft: #2E2418;
+    --ok: #6FB98A;
+    --pending: #74806D;
+    --pending-bg: #1E2419;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.55;
+  }
+  .serif{ font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; }
+  h1,h2,h3{ font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; font-weight:600; text-wrap:balance; margin:0; }
+  .tabular{ font-variant-numeric:tabular-nums; }
+
+  a{ color:var(--accent); }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px 96px; }
+  .full{ max-width:1100px; margin:0 auto; padding:0 24px; }
+
+  header.top{
+    padding:56px 0 40px; border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--accent);
+    font-weight:600; margin:0 0 12px;
+  }
+  header.top h1{ font-size:clamp(28px,4vw,40px); line-height:1.15; margin:0 0 14px; }
+  header.top p.lede{ color:var(--muted); font-size:17px; max-width:640px; margin:0; }
+
+  nav.jump{
+    position:sticky; top:0; z-index:5; background:var(--bg);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:saturate(140%) blur(6px);
+  }
+  nav.jump .row{ display:flex; gap:4px; padding:12px 0; flex-wrap:wrap; }
+  nav.jump a{
+    text-decoration:none; color:var(--muted); font-size:13.5px; font-weight:600;
+    padding:7px 12px; border-radius:999px; border:1px solid transparent;
+  }
+  nav.jump a:hover{ color:var(--ink); border-color:var(--line); background:var(--bg-raised); }
+
+  section{ padding:56px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+  section > .kicker{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  section > .kicker .num{ font-family:"Iowan Old Style",Georgia,serif; color:var(--faint); font-size:15px; }
+  section h2{ font-size:clamp(22px,3vw,28px); margin-bottom:10px; }
+  section > p.dek{ color:var(--muted); font-size:15.5px; max-width:640px; margin:0 0 32px; }
+
+  .figure-shell{
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:14px;
+    padding:20px 20px 16px; box-shadow:var(--shadow); margin:0 0 20px;
+    overflow-x:auto;
+  }
+  figure{ margin:0; min-width:560px; }
+  figure svg{ display:block; width:100%; height:auto; }
+  figcaption{
+    margin-top:14px; padding-top:14px; border-top:1px solid var(--line);
+    font-size:13.5px; color:var(--muted); max-width:680px;
+  }
+
+  .legend{ display:flex; gap:18px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin:0 0 18px; }
+  .legend .item{ display:flex; align-items:center; gap:7px; }
+  .legend svg{ width:26px; height:14px; flex:none; }
+
+  .note{
+    font-size:14px; color:var(--muted); background:var(--accent-soft);
+    border-left:3px solid var(--accent); padding:12px 16px; border-radius:0 8px 8px 0; margin-top:18px;
+  }
+  .note strong{ color:var(--ink); }
+
+  /* two-contour cards */
+  .contours{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:24px; }
+  @media (max-width:680px){ .contours{ grid-template-columns:1fr; } }
+  .contour{
+    border:1px solid var(--line); border-radius:14px; padding:20px 22px; background:var(--bg-raised);
+  }
+  .contour .tag{
+    display:inline-block; font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px; margin-bottom:12px;
+  }
+  .contour.a .tag{ background:var(--accent-soft); color:var(--accent); }
+  .contour.b .tag{ background:var(--accent2-soft); color:var(--accent2); }
+  .contour h3{ font-size:18px; margin-bottom:8px; }
+  .contour p{ font-size:14.5px; color:var(--muted); margin:0 0 12px; }
+  .contour ul{ margin:0; padding-left:18px; font-size:14px; color:var(--ink); }
+  .contour li{ margin-bottom:6px; }
+  .contour li b{ color:var(--muted); font-weight:600; }
+
+  /* roadmap timeline */
+  .timeline{ position:relative; margin-top:8px; }
+  .tl-row{
+    display:flex; gap:0; overflow-x:auto; padding-bottom:8px; scroll-snap-type:x proximity;
+  }
+  .tl-stage{
+    flex:0 0 210px; scroll-snap-align:start; position:relative; padding:0 14px 0 0;
+  }
+  .tl-stage:not(:last-child)::after{
+    content:""; position:absolute; top:15px; left:14px; right:-14px; height:2px; background:var(--line);
+  }
+  .tl-stage .dot-row{ display:flex; align-items:center; gap:10px; margin-bottom:14px; position:relative; z-index:1; }
+  .tl-dot{
+    width:30px; height:30px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center;
+    font-size:12.5px; font-weight:700; border:2px solid var(--line); background:var(--bg);
+  }
+  .tl-stage.done .tl-dot, .tl-stage.progress .tl-dot{ border-color:var(--accent2); color:var(--accent2); background:var(--accent2-soft); }
+  .tl-stage.pending .tl-dot{ color:var(--pending); }
+  .status-pill{
+    font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; display:inline-block;
+  }
+  .status-pill.progress{ background:var(--accent2-soft); color:var(--accent2); }
+  .status-pill.pending{ background:var(--pending-bg); color:var(--pending); }
+  .tl-stage h4{ font-size:14.5px; margin:0 0 6px; font-weight:700; }
+  .tl-stage p{ font-size:12.5px; color:var(--muted); margin:0 0 8px; min-height:48px; }
+
+  footer.pagefoot{
+    padding:40px 0 0; color:var(--faint); font-size:13px;
+  }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Общество Счастья · рабочий чертёж</p>
+    <h1>Как устроена платформа и куда она движется</h1>
+    <p class="lede">Визуальная сборка двух рабочих документов — <span class="serif">«Архитектура живой платформы»</span> и <span class="serif">«Этапы развития от книги до Общества Счастья»</span> — чтобы держать механизм и прогресс перед глазами, не листая текст.</p>
+  </div>
+</header>
+
+<nav class="jump">
+  <div class="full row">
+    <a href="#kubiki">Кубики и граф</a>
+    <a href="#konturi">Два контура</a>
+    <a href="#kniga">Три формы книги</a>
+    <a href="#platforma">Платформа и интерфейсы</a>
+    <a href="#etapy">Этапы движения</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="kubiki">
+    <div class="kicker"><span class="num tabular">01</span></div>
+    <h2>Кубики: маленькие внутри больших</h2>
+    <p class="dek">Общество — самый большой кубик. Внутри него — кубики сфер (медицина, образование, Ковчег), внутри Ковчега — кубики технологий (дом, ферма, энергетика), внутри дома — кубики систем (отопление, кондиционер). Вложенность продолжается вглубь настолько, насколько нужно.</p>
+
+    <div class="legend">
+      <span class="item"><svg viewBox="0 0 26 14"><rect x="1" y="1" width="24" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg> кубик — часть родителя</span>
+      <span class="item"><svg viewBox="0 0 26 14"><rect x="1" y="1" width="24" height="12" rx="3" fill="var(--accent2-soft)" stroke="var(--accent2)" stroke-width="1.6" stroke-dasharray="3 2"/></svg> общий кубик — принадлежит двум сразу</span>
+    </div>
+
+    <div class="figure-shell">
+      <figure>
+        <svg viewBox="0 0 760 460" role="img" aria-label="Вложенные кубики: самый большой кубик «Общество» содержит кубики «Медицина», «Образование» и «Ковчег». Кубик «Ковчег» содержит кубики «Дом», «Ферма» и «Энергетика». Внутри «Дома» — отопление и кондиционер, внутри «Фермы» — теплицы и полив. Маленький кубик «Подогрев грунта» нарисован на границе между «Домом» и «Фермой» — он принадлежит обоим сразу, и появляется только при условии холодного климата." font-family="-apple-system,Segoe UI,sans-serif">
+
+          <!-- Level 1: Общество -->
+          <rect x="16" y="16" width="728" height="428" rx="16" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <text x="40" y="48" font-size="15" font-weight="700" fill="currentColor">ОБЩЕСТВО</text>
+          <text x="40" y="66" font-size="10.5" fill="currentColor" opacity=".55">самый крупный кубик</text>
+
+          <!-- Level 2: siblings -->
+          <rect x="40" y="86" width="150" height="338" rx="12" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <text x="115" y="112" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">МЕДИЦИНА</text>
+          <text x="115" y="128" text-anchor="middle" font-size="9.5" fill="currentColor" opacity=".55">кубик сферы</text>
+          <text x="115" y="250" text-anchor="middle" font-size="16" fill="currentColor" opacity=".4">···</text>
+
+          <rect x="204" y="86" width="150" height="338" rx="12" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <text x="279" y="112" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">ОБРАЗОВАНИЕ</text>
+          <text x="279" y="128" text-anchor="middle" font-size="9.5" fill="currentColor" opacity=".55">кубик сферы</text>
+          <text x="279" y="250" text-anchor="middle" font-size="16" fill="currentColor" opacity=".4">···</text>
+
+          <!-- Ковчег (expanded) -->
+          <rect x="368" y="86" width="356" height="338" rx="12" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <text x="388" y="112" font-size="12.5" font-weight="700" fill="var(--accent)">КОВЧЕГ</text>
+          <text x="388" y="128" font-size="9.5" fill="var(--accent)" opacity=".7">кубик сообщества</text>
+
+          <!-- Level 3: inside Ковчег -->
+          <rect x="388" y="150" width="96" height="254" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="436" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">ДОМ</text>
+          <text x="436" y="192" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">отопление</text>
+          <text x="436" y="206" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">кондиционер</text>
+          <text x="436" y="392" text-anchor="middle" font-size="14" fill="currentColor" opacity=".4">···</text>
+
+          <rect x="498" y="150" width="96" height="254" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="546" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">ФЕРМА</text>
+          <text x="546" y="192" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">теплицы</text>
+          <text x="546" y="206" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">полив</text>
+          <text x="546" y="392" text-anchor="middle" font-size="14" fill="currentColor" opacity=".4">···</text>
+
+          <rect x="608" y="150" width="96" height="254" rx="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="656" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="currentColor">ЭНЕРГЕТИКА</text>
+          <text x="656" y="192" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">панели</text>
+          <text x="656" y="206" text-anchor="middle" font-size="9" fill="currentColor" opacity=".7">накопители</text>
+          <text x="656" y="392" text-anchor="middle" font-size="14" fill="currentColor" opacity=".4">···</text>
+
+          <!-- shared cube straddling Дом / Ферма border -->
+          <rect x="458" y="272" width="66" height="52" rx="8" fill="var(--accent2-soft)" stroke="var(--accent2)" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="491" y="293" text-anchor="middle" font-size="9" font-weight="700" fill="var(--accent2)">подогрев</text>
+          <text x="491" y="306" text-anchor="middle" font-size="9" font-weight="700" fill="var(--accent2)">грунта</text>
+        </svg>
+        <figcaption>«Подогрев грунта» нарисован на стыке «Дома» и «Фермы» — это один и тот же кубик, который входит в обе сборки, но появляется в них только при условии «климат = холодный». Дерево не умеет показать кубик сразу у двух родителей — здесь это видно буквально, по месту на границе.</figcaption>
+      </figure>
+    </div>
+
+    <div class="note">Гранулярность кубика не ограничена: критерий — смысловая законченность, а не число предложений. Дробление рекурсивно и не привязано к строительству — то же деление работает для медицины, образования, любой сферы, вплоть до узла внутри системы отопления.</div>
+  </section>
+
+  <section id="konturi">
+    <div class="kicker"><span class="num tabular">02</span></div>
+    <h2>Два контура: Наследие и Решения</h2>
+    <p class="dek">Сохранить опыт и принять официальное решение — разные по природе задачи. Смешивать их в одном механизме голосования вредно: у Наследия ценность в разнообразии мнений, у Решений — в одном обязывающем ответе.</p>
+
+    <div class="figure-shell">
+      <figure>
+        <svg viewBox="0 0 760 330" role="img" aria-label="Схема: идея от человека расходится на два контура. Контур А «Наследие» — оцифровка, верификация, публикация, без голосования, разные мнения сосуществуют. Контур Б «Решения» — идея номинируется, группа экспертов обсуждает при ИИ-модерации, взвешенный консенсус, обновление канона. Оба контура сходятся в графе блоков, который расходится в книгу, портал и приложение." font-family="-apple-system,Segoe UI,sans-serif">
+          <defs>
+            <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <!-- person -->
+          <rect x="320" y="10" width="120" height="42" rx="21" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="380" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor">Человек</text>
+
+          <path d="M355,52 C300,80 260,80 220,100" fill="none" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#arrow2)"/>
+          <path d="M405,52 C460,80 500,80 540,100" fill="none" stroke="var(--accent2)" stroke-width="1.8" marker-end="url(#arrow2)"/>
+
+          <!-- Contour A -->
+          <rect x="90" y="100" width="260" height="120" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6"/>
+          <text x="220" y="126" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">КОНТУР А — НАСЛЕДИЕ</text>
+          <text x="220" y="150" text-anchor="middle" font-size="11.5" fill="currentColor">оцифровка → структурирование</text>
+          <text x="220" y="168" text-anchor="middle" font-size="11.5" fill="currentColor">→ верификация автором</text>
+          <text x="220" y="196" text-anchor="middle" font-size="11" fill="var(--accent)" font-weight="700">публикация, без голосования</text>
+
+          <!-- Contour B -->
+          <rect x="410" y="100" width="260" height="150" rx="12" fill="var(--accent2-soft)" stroke="var(--accent2)" stroke-width="1.6"/>
+          <text x="540" y="126" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent2)">КОНТУР Б — РЕШЕНИЯ</text>
+          <text x="540" y="150" text-anchor="middle" font-size="11.5" fill="currentColor">номинация → группа экспертов</text>
+          <text x="540" y="168" text-anchor="middle" font-size="11.5" fill="currentColor">обсуждение при ИИ-модерации</text>
+          <text x="540" y="186" text-anchor="middle" font-size="11.5" fill="currentColor">автор отвечает на возражения</text>
+          <text x="540" y="212" text-anchor="middle" font-size="11" fill="var(--accent2)" font-weight="700">взвешенный консенсус → канон</text>
+
+          <!-- convergence -->
+          <path d="M220,220 C220,255 380,255 380,270" fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#arrow2)"/>
+          <path d="M540,250 C540,255 380,255 380,270" fill="none" stroke="var(--accent2)" stroke-width="1.6" marker-end="url(#arrow2)"/>
+
+          <rect x="290" y="272" width="180" height="42" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="380" y="298" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Граф блоков</text>
+
+          <path d="M290,293 L120,315" fill="none" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow2)"/>
+          <path d="M380,314 L380,325" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M470,293 L640,315" fill="none" stroke="currentColor" stroke-width="1.4" marker-end="url(#arrow2)"/>
+
+          <text x="95" y="326" font-size="11" fill="currentColor" opacity=".7">Книга</text>
+          <text x="355" y="326" font-size="11" fill="currentColor" opacity=".7">Портал</text>
+          <text x="645" y="326" font-size="11" fill="currentColor" opacity=".7">Приложение</text>
+        </svg>
+        <figcaption>Личный кабинет — точка перехода из архива (А) в контур официальных решений (Б). Модель модерации Б — «вес аргумента», как в википедийном консенсусе, а не подсчёт голосов.</figcaption>
+      </figure>
+    </div>
+
+    <div class="contours">
+      <div class="contour a">
+        <span class="tag">Контур А</span>
+        <h3>Наследие — архив</h3>
+        <p>Ценность в широте и происхождении опыта. Разные, даже противоречащие описания — не конфликт, а разные условия применения.</p>
+        <ul>
+          <li><b>Проверка —</b> фактическая и форматная, не оценка мнения</li>
+          <li><b>Голосование —</b> нет, оно здесь не нужно</li>
+          <li><b>Прецедент —</b> Википедия не голосует за текст статей</li>
+        </ul>
+      </div>
+      <div class="contour b">
+        <span class="tag">Контур Б</span>
+        <h3>Решения — канон</h3>
+        <p>Задача — прийти к одному обязывающему ответу: от него зависит, что физически строится и что написано в книге на всех языках.</p>
+        <ul>
+          <li><b>Вход —</b> номинация из Наследия или прямая подача</li>
+          <li><b>Модерация —</b> ИИ держит тон, требует аргумент на возражение</li>
+          <li><b>Итог —</b> взвешенный консенсус, не счёт голосов</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="kniga">
+    <div class="kicker"><span class="num tabular">03</span></div>
+    <h2>Три формы книги — один источник</h2>
+    <p class="dek">Бумага, электронная книга и книга внутри мобильного приложения — три разные точки входа в одни и те же материалы. Портал не четвёртая копия текста, а хранитель того, на что все три формы ссылаются.</p>
+
+    <div class="figure-shell">
+      <figure>
+        <svg viewBox="0 0 720 260" role="img" aria-label="Схема: бумажная книга через QR-код, электронная книга через кнопку «Подробнее» и книга внутри мобильного приложения — все три ведут в одну и ту же подстраницу портала с фото, видео и расчётами." font-family="-apple-system,Segoe UI,sans-serif">
+          <defs>
+            <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <rect x="20" y="15" width="190" height="50" rx="10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <text x="115" y="36" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Бумажная книга</text>
+          <text x="115" y="53" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".6">QR-код на странице</text>
+
+          <rect x="20" y="105" width="190" height="50" rx="10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <text x="115" y="126" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Электронная книга</text>
+          <text x="115" y="143" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".6">кнопка «Подробнее»</text>
+
+          <rect x="20" y="195" width="190" height="50" rx="10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <text x="115" y="216" text-anchor="middle" font-size="12.5" font-weight="700" fill="currentColor">Книга в приложении</text>
+          <text x="115" y="233" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".6">та же ссылка «Подробнее»</text>
+
+          <rect x="470" y="90" width="230" height="70" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="585" y="115" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--accent)">Портал — подстраница</text>
+          <text x="585" y="133" text-anchor="middle" font-size="10.5" fill="var(--accent)">фото · видео · расчёт · аудио</text>
+
+          <path d="M210,40 C340,40 380,95 468,112" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow3)"/>
+          <path d="M210,130 C340,130 400,125 468,125" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow3)"/>
+          <path d="M210,220 C340,220 380,160 468,140" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow3)"/>
+        </svg>
+        <figcaption>Один и тот же расчёт или ролик со страницы 214 книги — в бумаге, в электронной версии и в приложении — доступен по одной и той же ссылке на портале, без трёх разных копий материала.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="platforma">
+    <div class="kicker"><span class="num tabular">04</span></div>
+    <h2>Платформа и интерфейсы</h2>
+    <p class="dek">Одно приложение растёт вместе с графом: от книги с диктофоном до полноценного управления Ковчегом — новые узлы графа появляются новыми экранами, без смены продукта. Интерфейсов у платформы ровно два — портал и приложение.</p>
+
+    <div class="figure-shell">
+      <figure>
+        <svg viewBox="0 0 720 230" role="img" aria-label="Схема: платформа (граф, логика, агенты, база данных) в центре, от неё расходятся стрелки к двум интерфейсам — веб-порталу и мобильному приложению." font-family="-apple-system,Segoe UI,sans-serif">
+          <defs>
+            <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <rect x="260" y="16" width="200" height="60" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="360" y="41" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">ПЛАТФОРМА</text>
+          <text x="360" y="59" text-anchor="middle" font-size="10.5" fill="var(--accent)">граф · агенты · БД</text>
+
+          <path d="M325,76 C280,105 250,125 240,146" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow4)"/>
+          <path d="M395,76 C440,105 470,125 480,146" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow4)"/>
+
+          <rect x="140" y="150" width="200" height="58" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="240" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Веб-портал</text>
+          <text x="240" y="191" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".6">societyofhappiness</text>
+
+          <rect x="380" y="150" width="200" height="58" rx="10" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <text x="480" y="174" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">Мобильное приложение</text>
+          <text x="480" y="191" text-anchor="middle" font-size="10.5" fill="currentColor" opacity=".6">iOS / Android</text>
+        </svg>
+        <figcaption>Не два отдельных продукта — две проекции одного графа. NotebookLM/Gemini и печать (раздел 5) — не отдельный интерфейс, а инструмент, которым портал и приложение готовят свою картинку.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="etapy">
+    <div class="kicker"><span class="num tabular">05</span></div>
+    <h2>Этапы движения — что сделано, что нет</h2>
+    <p class="dek">От книги до мирового Общества Счастья. Сейчас в работе только этап 0; всё остальное — спроектировано, но не начато, по решению: сначала книга утверждена целиком, потом разметка и разработка.</p>
+
+    <div class="timeline">
+      <div class="tl-row">
+
+        <div class="tl-stage progress">
+          <div class="dot-row"><div class="tl-dot">0</div><span class="status-pill progress">В работе</span></div>
+          <h4>Книга</h4>
+          <p>Написание и верификация. Верифицировано 3 из 29 глав (18, 19, 20).</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">1</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Мультимедиа</h4>
+          <p>Инфографика, видео, схемы, аудио к книге.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">2</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Портал + приложение</h4>
+          <p>ТЗ MVP портала уже готово, разработка не начата.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">3</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Критическая масса</h4>
+          <p>Первая волна — 50 семей, ценностный фильтр, ~15–20 млн ₽/семья.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">4</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Земля + инвестпроект</h4>
+          <p>~10 млрд ₽, без обращения к государству, полный пакет документов.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">5</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Строительство первого Ковчега</h4>
+          <p>2 года: коммуникации, дома, инфраструктура.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">6</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Тиражирование</h4>
+          <p>Новые Ковчеги по примеру первого, быстрее и дешевле.</p>
+        </div>
+
+        <div class="tl-stage pending">
+          <div class="dot-row"><div class="tl-dot">7</div><span class="status-pill pending">Не начато</span></div>
+          <h4>Мировой масштаб</h4>
+          <p>Все языки. Сообщество Счастья становится Обществом Счастья.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pagefoot">
+  <div class="wrap">
+    Сборка по <span class="serif">docs/АРХИТЕКТУРА_ЖИВОЙ_ПЛАТФОРМЫ.md</span> и <span class="serif">docs/ЭТАПЫ_РАЗВИТИЯ_ОТ_КНИГИ_ДО_ОБЩЕСТВА_СЧАСТЬЯ.md</span> — черновик для обсуждения, 2026-08-10.
+  </div>
+</footer>
