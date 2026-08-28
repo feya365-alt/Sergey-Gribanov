@@ -1,0 +1,456 @@
+<title>Аудитории Ковчега</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;600;700&family=PT+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF0E7;
+    --surface:#E2E7D9;
+    --surface-2:#D7DECB;
+    --ink:#202B1D;
+    --ink-soft:#55624B;
+    --ink-faint:#7C8770;
+    --accent:#B3781F;
+    --accent-strong:#8F5E15;
+    --accent-2:#5B7A4A;
+    --line:#C4CDB3;
+    --card-shadow: 0 1px 0 rgba(32,43,29,0.06);
+    --mono-tint: rgba(91,122,74,0.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12160F;
+      --surface:#181D13;
+      --surface-2:#212819;
+      --ink:#E9ECDF;
+      --ink-soft:#A6B096;
+      --ink-faint:#79806C;
+      --accent:#E0A94E;
+      --accent-strong:#F0BE6E;
+      --accent-2:#8FAE78;
+      --line:#333D28;
+      --card-shadow: 0 1px 0 rgba(0,0,0,0.3);
+      --mono-tint: rgba(143,174,120,0.14);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12160F;
+    --surface:#181D13;
+    --surface-2:#212819;
+    --ink:#E9ECDF;
+    --ink-soft:#A6B096;
+    --ink-faint:#79806C;
+    --accent:#E0A94E;
+    --accent-strong:#F0BE6E;
+    --accent-2:#8FAE78;
+    --line:#333D28;
+    --card-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    --mono-tint: rgba(143,174,120,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"PT Sans", "Segoe UI", sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1180px;
+    margin:0 auto;
+    padding:56px 32px 96px;
+  }
+
+  /* Masthead */
+  header.masthead{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    padding-bottom:36px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:40px;
+  }
+  .eyebrow{
+    font-family:"PT Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-strong);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--accent-strong);
+    display:inline-block;
+  }
+  h1{
+    font-family:"PT Serif", Georgia, serif;
+    font-weight:700;
+    font-size:clamp(2rem, 4vw, 2.9rem);
+    margin:0;
+    text-wrap:balance;
+    letter-spacing:-0.01em;
+  }
+  .lede{
+    max-width:66ch;
+    font-size:1.05rem;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .method{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:6px;
+  }
+  .method span{
+    font-family:"PT Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    background:var(--mono-tint);
+    color:var(--accent-strong);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:4px 9px;
+  }
+
+  section.intro{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:40px;
+    margin-bottom:48px;
+  }
+  @media (max-width: 780px){
+    section.intro{grid-template-columns:1fr;}
+  }
+  section.intro h2{
+    font-family:"PT Serif", serif;
+    font-size:1.15rem;
+    margin:0 0 10px;
+    font-weight:700;
+  }
+  section.intro p{
+    margin:0 0 12px;
+    color:var(--ink-soft);
+    font-size:0.97rem;
+  }
+  section.intro p:last-child{margin-bottom:0;}
+  .principle-quote{
+    background:var(--surface);
+    border-left:3px solid var(--accent);
+    padding:18px 22px;
+    font-family:"PT Serif", serif;
+    font-size:1.02rem;
+    font-style:italic;
+    color:var(--ink);
+    box-shadow:var(--card-shadow);
+  }
+  .principle-quote cite{
+    display:block;
+    margin-top:10px;
+    font-family:"PT Mono", monospace;
+    font-style:normal;
+    font-size:0.7rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+
+  /* Table */
+  .table-label{
+    font-family:"PT Mono", monospace;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 12px;
+  }
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:4px;
+    box-shadow:var(--card-shadow);
+    margin-bottom:56px;
+  }
+  table{
+    border-collapse:collapse;
+    width:100%;
+    min-width:1780px;
+    background:var(--bg);
+  }
+  th, td{
+    text-align:left;
+    vertical-align:top;
+    padding:14px 16px;
+    font-size:0.88rem;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  th:last-child, td:last-child{border-right:none;}
+  thead th{
+    position:sticky;
+    top:0;
+    z-index:2;
+    background:var(--surface-2);
+    font-family:"PT Mono", monospace;
+    font-weight:700;
+    font-size:0.68rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  tbody th{
+    position:sticky;
+    left:0;
+    z-index:1;
+    background:var(--surface);
+    min-width:190px;
+    max-width:210px;
+  }
+  thead th:first-child{
+    left:0;
+    z-index:3;
+  }
+  tbody tr:nth-child(even) td:not([scope]){
+    background:var(--surface);
+  }
+  tbody tr:nth-child(even) th{
+    background:var(--surface-2);
+  }
+  td{ max-width:260px; }
+  td, tbody th p{ margin:0; }
+
+  .seg-num{
+    font-family:"PT Mono", monospace;
+    font-size:0.7rem;
+    color:var(--accent-strong);
+    display:block;
+    margin-bottom:3px;
+  }
+  .seg-name{
+    font-family:"PT Serif", serif;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--ink);
+    display:block;
+  }
+  .hook-cell{
+    font-family:"PT Serif", serif;
+    font-style:italic;
+    color:var(--accent-strong);
+  }
+  .value-tag{
+    display:inline-block;
+    font-family:"PT Mono", monospace;
+    font-size:0.68rem;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:3px;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .value-tag.high{ color:var(--accent-strong); border-color:var(--accent); background:var(--mono-tint); }
+
+  tr.non-target th, tr.non-target td{
+    opacity:0.72;
+    font-style:italic;
+    color:var(--ink-faint);
+  }
+  tr.non-target .seg-name{ color:var(--ink-faint); }
+
+  /* Outro */
+  .outro{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+  @media (max-width:780px){ .outro{grid-template-columns:1fr;} }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px 24px;
+    box-shadow:var(--card-shadow);
+  }
+  .card h3{
+    font-family:"PT Serif", serif;
+    font-size:1rem;
+    margin:0 0 10px;
+  }
+  .card p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:0.92rem;
+  }
+  .card ul{
+    margin:8px 0 0;
+    padding-left:18px;
+    color:var(--ink-soft);
+    font-size:0.92rem;
+  }
+  .card li{ margin-bottom:4px; }
+
+  footer{
+    margin-top:56px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-family:"PT Mono", monospace;
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    color:var(--ink-faint);
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">Общество счастья · Ковчег</div>
+    <h1>Карта из семи входов</h1>
+    <p class="lede">Кто читает книгу, что именно получает и через что заходит в проект — от семьи, ищущей другую жизнь, до эксперта, у которого нет денег, но есть руки и знания. Ниже — не абстрактный портрет читателя, а рабочая карта сегментов для текста, PR и воронки участия.</p>
+    <div class="method">
+      <span>Buyer Persona</span>
+      <span>Jobs-to-be-Done</span>
+      <span>Демография × психография</span>
+      <span>Воронка участия</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div>
+      <h2>Как собрана карта</h2>
+      <p>Каждый сегмент описан по стандартной схеме маркетингового исследования аудитории: демографический профиль, ценности и психография, незакрытая боль, «работа», которую человек нанимает книгу выполнить (JTBD по Клейтону Кристенсену), конкретный крючок текста, вероятные возражения, каналы, где сегмент реально находится, и его роль в модели участия проекта.</p>
+      <p>Семь сегментов — не произвольный список, а порядок раскрытия темы в самой книге: от личного мотива читателя (глава I) — к структурам, которые способны либо ускорить, либо остановить проект (власть, бизнес, экспертиза, дух). Восьмая строка — сознательно не целевая аудитория: не ошибка, а стратегическое решение автора не тратить на неё энергию текста.</p>
+    </div>
+    <div class="principle-quote">
+      Нельзя изменить общество, затронув только один его слой. 500 счастливых семей в посёлке — это не общество счастья, это счастливый остров. Трансформация происходит на пересечении всех сегментов сразу.
+      <cite>Из «Целей и задач книги», часть II</cite>
+    </div>
+  </section>
+
+  <p class="table-label">Таблица сегментов · 9 параметров на каждый</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Сегмент</th>
+          <th scope="col">Демография</th>
+          <th scope="col">Психография и ценности</th>
+          <th scope="col">Боль / незакрытая потребность</th>
+          <th scope="col">JTBD — какую работу нанимают книгу выполнить</th>
+          <th scope="col">Крючок книги</th>
+          <th scope="col">Возражения и барьеры</th>
+          <th scope="col">Каналы охвата</th>
+          <th scope="col">Роль и ценность для проекта</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><span class="seg-num">01</span><span class="seg-name">Семьи, ищущие другую жизнь</span></th>
+          <td>30–50 лет, часто пара с детьми школьного/дошкольного возраста, доход выше среднего или капитал от продажи городской недвижимости, города-миллионники (Москва, СПб, Екатеринбург, Новосибирск)</td>
+          <td>Материально состоялись, счастья не прибавилось; ценят природу, здоровье, «право на паузу» после 40; растёт запрос на экологичность и осмысленность быта</td>
+          <td>Выгорание в городском темпе, тревога за детей (экраны, экология, школа), ощущение бессмысленности дальнейшего карьерного роста</td>
+          <td>«Докажи мне, что смена уклада — это не безумие, а просчитанный, реализуемый шаг»</td>
+          <td class="hook-cell">«Это доступно. Это реально. Это для тебя»</td>
+          <td>«А как с работой и доходом», «а школа и медицина», страх осуждения близких, подозрение — «это секта»</td>
+          <td>Телеграм-каналы про экопоселения и дауншифтинг, YouTube «жизнь вне города», родительские сообщества, ЗОЖ-паблики, сарафанное радио</td>
+          <td><span class="value-tag high">высокая</span> — покупка дома, переезд, основной денежный поток проекта</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="seg-num">02</span><span class="seg-name">Действующая власть</span></th>
+          <td>35–65 лет, депутаты, главы районов, губернаторский блок — преимущественно региональный, а не федеральный уровень</td>
+          <td>Мыслят категориями отчётности «наверх», медийности, электоральной поддержки «снизу»; крайне чувствительны к репутационному риску</td>
+          <td>Дефицит ярких и безопасных инфоповодов; давление показать развитие территории при ограниченном бюджете</td>
+          <td>«Дай мне готовый, безопасный проект, который я могу возглавить и предъявить наверх»</td>
+          <td class="hook-cell">«Ты можешь стать тем, при ком это началось»</td>
+          <td>Страх ассоциации с «сектой» или эзотерикой, нежелание брать ответственность за прецедент, бюрократическая инерция</td>
+          <td>Отраслевые и региональные форумы, деловые ассоциации, рекомендации доверенных лиц, деловая пресса</td>
+          <td><span class="value-tag">стратегическая</span> — PR-поддержка, административный ресурс, защита проекта</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="seg-num">03</span><span class="seg-name">Стремящиеся во власть</span></th>
+          <td>28–50 лет, региональные предприниматели, общественники, муниципальные депутаты первого созыва</td>
+          <td>Ищут «чистую», бесспорную повестку для репутации; амбициозны, готовы вкладывать личное время в публично видимые проекты</td>
+          <td>Нет платформы и аудитории; нет темы, вокруг которой можно расти без конфликта и риска</td>
+          <td>«Дай мне легитимную повестку, вокруг которой я могу строить репутацию»</td>
+          <td class="hook-cell">«Хочешь влияния — помогай тому, что люди уже хотят»</td>
+          <td>Опасение, что тема останется нишевой; конкуренция за видимость внутри самого проекта</td>
+          <td>Политические школы, локальные паблики, телеграм-политаналитика, нетворкинг-мероприятия</td>
+          <td><span class="value-tag">сетевая</span> — амбассадорство, представительство идеи в регионах</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="seg-num">04</span><span class="seg-name">Бизнес и предприниматели</span></th>
+          <td>30–55 лет, владельцы строительных, инфраструктурных и сервисных компаний, частные инвесторы с горизонтом 3–7 лет</td>
+          <td>Прагматики; ищут новый рынок роста вне перегретых ниш; ценят понятную модель и цифры больше, чем идею</td>
+          <td>Сложно найти растущий сегмент с низкой конкуренцией и внятным спросом</td>
+          <td>«Покажи мне кейс с цифрами, куда я могу зайти подрядчиком, партнёром или инвестором»</td>
+          <td class="hook-cell">«Здесь есть рынок. И он только начинается»</td>
+          <td>«Почему именно сейчас», юридическая и земельная чистота проекта, ликвидность вложений</td>
+          <td>Бизнес-форумы, отраслевые выставки (стройка, инфраструктура), профильные Telegram/VC-сообщества, TenChat</td>
+          <td><span class="value-tag high">высокая</span> — подрядчики, партнёры, резиденты-инвесторы</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="seg-num">05</span><span class="seg-name">Эксперты без денег</span></th>
+          <td>28–55 лет, агрономы, врачи, педагоги, инженеры, IT-специалисты, психологи; часто фрилансеры, капитала на «вход» нет</td>
+          <td>Смысл работы ценят выше дохода; готовы к отложенному вознаграждению; ищут признание и применение знаний</td>
+          <td>Знания есть, а капитала на присоединение к сообществу мечты — нет; ощущение невостребованности в текущей системе</td>
+          <td>«Покажи мне путь войти без денег — через то, что я умею»</td>
+          <td class="hook-cell">«Ты нужен. Твои знания — это твои деньги»</td>
+          <td>«А вдруг труд не засчитают», неясность механики пая, риск потратить время впустую</td>
+          <td>Профессиональные сообщества по специальностям, Хабр/VC.ru (IT), профильные конференции, личные рекомендации</td>
+          <td><span class="value-tag high">операционная</span> — экспертный вклад = пай, кадровое ядро сервисов</td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="seg-num">06</span><span class="seg-name">Духовно развитые</span></th>
+          <td>25–65 лет, широкий разброс профессий; часто уже финансово независимы или сознательно живут просто</td>
+          <td>Ценят служение, безвозмездность, поиск «своих»; развитая рефлексия; уже практикуют осознанность, экопрактики, со-творчество</td>
+          <td>Одиночество среди «непонимающих»; нет критической массы единомышленников рядом</td>
+          <td>«Подтверди, что мой путь — не иллюзия, покажи, что он масштабируется»</td>
+          <td class="hook-cell">«Ты уже живёшь так. Теперь есть место, где это норма для всех»</td>
+          <td>Настороженность к «гуруизму» и коммерциализации духовности, тонкое чувство фальши</td>
+          <td>Осознанные сообщества, ретриты, подкасты об осознанности, рекомендации внутри «своего круга»</td>
+          <td><span class="value-tag">культурная</span> — наставничество, хранители ценностей сообщества</td>
+        </tr>
+        <tr class="non-target">
+          <th scope="row"><span class="seg-num">—</span><span class="seg-name">Вне фокуса (сознательно)</span></th>
+          <td>Любой профиль</td>
+          <td>Другие программы и цели — потребление, конкуренция и конфликт как источник смысла</td>
+          <td>Не диагностируется — не входит в предмет книги</td>
+          <td>—</td>
+          <td class="hook-cell">специального крючка нет</td>
+          <td>Книга не пытается переубедить и не тратит на это текст</td>
+          <td>Не таргетируются намеренно</td>
+          <td><span class="value-tag">нулевая — осознанно</span> позиция автора: не расходовать энергию на тех, кто не слышит</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="outro">
+    <div class="card">
+      <h3>Как использовать карту</h3>
+      <p>При написании или редактуре главы — сверяться, к какому сегменту (или нескольким) она обращена и какой именно крючок из таблицы она реализует. Глава без адресата — это глава, которую допишет редактор, а не читатель захочет дочитать.</p>
+    </div>
+    <div class="card">
+      <h3>Модели входа в проект</h3>
+      <ul>
+        <li>Деньги → покупка дома, жизнь в Ковчеге</li>
+        <li>Знания и время → пай через экспертный вклад</li>
+        <li>Влияние → поддержка, продвижение, PR</li>
+        <li>Духовный потенциал → наставничество, безвозмездный вклад</li>
+        <li>Предпринимательство → бизнес внутри экосистемы</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Составлено на основе ЦЕЛИ_И_ЗАДАЧИ_КНИГИ.md (общество счастья) и стандартных фреймворков сегментации: Buyer Persona, Jobs-to-be-Done · 2026</footer>
+
+</div>
