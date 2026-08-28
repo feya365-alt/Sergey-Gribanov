@@ -1,0 +1,265 @@
+<title>Аудитория Ковчега — таблица A4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;600;700&family=PT+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF0E7;
+    --surface:#E2E7D9;
+    --surface-2:#D7DECB;
+    --ink:#202B1D;
+    --ink-soft:#55624B;
+    --ink-faint:#7C8770;
+    --accent:#B3781F;
+    --accent-strong:#8F5E15;
+    --accent-2:#5B7A4A;
+    --line:#C4CDB3;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12160F; --surface:#181D13; --surface-2:#212819;
+      --ink:#E9ECDF; --ink-soft:#A6B096; --ink-faint:#79806C;
+      --accent:#E0A94E; --accent-strong:#F0BE6E; --accent-2:#8FAE78; --line:#333D28;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12160F; --surface:#181D13; --surface-2:#212819;
+    --ink:#E9ECDF; --ink-soft:#A6B096; --ink-faint:#79806C;
+    --accent:#E0A94E; --accent-strong:#F0BE6E; --accent-2:#8FAE78; --line:#333D28;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"PT Sans","Segoe UI",sans-serif;
+    line-height:1.42;
+  }
+  .page{ max-width:1500px; margin:0 auto; padding:28px 22px 60px; }
+  header{
+    display:flex; flex-direction:column; gap:8px;
+    padding-bottom:16px; border-bottom:1px solid var(--line); margin-bottom:18px;
+  }
+  .eyebrow{
+    font-family:"PT Mono",monospace; font-size:0.68rem; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--accent-strong); display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--accent-strong); display:inline-block; }
+  h1{ font-family:"PT Serif",Georgia,serif; font-weight:700; font-size:1.7rem; margin:0; }
+  .lede{ margin:0; color:var(--ink-soft); font-size:0.92rem; max-width:100ch; }
+  .table-wrap{
+    overflow-x:auto; border:1px solid var(--line); border-radius:4px;
+  }
+  table{ border-collapse:collapse; width:100%; min-width:1400px; table-layout:fixed; background:var(--bg); }
+  th, td{
+    text-align:left; vertical-align:top; padding:8px 9px; font-size:0.74rem;
+    border-bottom:1px solid var(--line); border-right:1px solid var(--line);
+  }
+  th:last-child, td:last-child{ border-right:none; }
+  thead th{
+    background:var(--surface-2); font-family:"PT Mono",monospace; font-weight:700;
+    font-size:0.63rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  tbody tr:nth-child(even) td, tbody tr:nth-child(even) th{ background:var(--surface); }
+  .seg-num{ font-family:"PT Mono",monospace; font-size:0.63rem; color:var(--accent-strong); display:block; margin-bottom:2px; }
+  .seg-name{ font-family:"PT Serif",serif; font-weight:700; font-size:0.86rem; color:var(--ink); display:block; }
+  .col-seg{ width:9%; }
+  .col-demo{ width:12%; }
+  .col-income{ width:9%; }
+  .col-values{ width:11%; }
+  .col-pain{ width:14%; }
+  .col-obj{ width:9%; }
+  .col-script{ width:36%; }
+  .income{ font-family:"PT Mono",monospace; font-weight:700; color:var(--accent-strong); font-size:0.72rem; }
+  .income-note{ display:block; color:var(--ink-faint); font-size:0.66rem; font-weight:400; margin-top:2px; font-family:"PT Sans",sans-serif; }
+  .script-block{ margin-bottom:6px; }
+  .script-block:last-child{ margin-bottom:0; }
+  .script-label{
+    font-family:"PT Mono",monospace; font-size:0.6rem; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--accent); display:block; margin-bottom:2px;
+  }
+  tr.strategic th, tr.strategic td{ opacity:0.82; }
+  tr.strategic .seg-name{ color:var(--ink-soft); }
+  footer{
+    margin-top:20px; padding-top:12px; border-top:1px solid var(--line);
+    font-family:"PT Mono",monospace; font-size:0.64rem; color:var(--ink-faint);
+  }
+
+  @page{ size:A4 landscape; margin:9mm; }
+  @media print{
+    body{ background:#fff; color:#111; font-size:9px; }
+    .page{ max-width:none; padding:0; }
+    header{ margin-bottom:8px; padding-bottom:8px; }
+    h1{ font-size:1.2rem; }
+    .lede{ font-size:0.72rem; }
+    .table-wrap{ overflow:visible; border:none; }
+    table{ min-width:0; width:100%; }
+    thead{ display:table-header-group; }
+    tr{ page-break-inside:avoid; }
+    th, td{ font-size:7.4px; padding:4px 5px; border-color:#999; }
+    thead th{ background:#eee !important; color:#000; }
+    tbody tr:nth-child(even) td, tbody tr:nth-child(even) th{ background:#f5f5f5 !important; }
+    .income{ color:#7a4a00; }
+    .script-label{ color:#7a4a00; }
+    footer{ display:none; }
+  }
+</style>
+
+<div class="page">
+
+  <header>
+    <div class="eyebrow">Общество счастья · Ковчег</div>
+    <h1>Аудитория книги и клуба — 8 сегментов, доход сейчас, скрипт приглашения</h1>
+    <p class="lede">Горизонтальная таблица для печати на A4 (альбомная ориентация, Ctrl+P → «Больше настроек» → книжная/альбомная → альбомная, поля минимальные). Доход указан по состоянию на 2026 год, диапазоны — по региону городов-миллионников (Пермь и аналогичные). Скрипт в последней колонке — сокращённая рабочая версия звонка и сообщения в телеграм; полные версии — в файле АУДИТОРИЯ_И_СКРИПТЫ_ПРИГЛАШЕНИЯ.md.</p>
+  </header>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-seg">Сегмент</th>
+          <th class="col-demo">Демография и семья</th>
+          <th class="col-income">Доход сейчас (2026)</th>
+          <th class="col-values">Ценности гл. 13</th>
+          <th class="col-pain">Боль / потребность / мечта</th>
+          <th class="col-obj">Возражения</th>
+          <th class="col-script">Скрипт (звонок + телеграм)</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">01</span><span class="seg-name">Семьи, ищущие другую жизнь</span></th>
+          <td>30–50 лет, пара с детьми школьного/дошкольного возраста, миллионники (Пермь, Екатеринбург, Москва, СПб)</td>
+          <td>
+            <span class="income">250 000–600 000 ₽/мес на семью</span>
+            <span class="income-note">+ капитал 8–25 млн ₽ от продажи городской квартиры</span>
+          </td>
+          <td>Забота (2–3 круг), Уважение к свободе, Единство, Красота и гармония</td>
+          <td>Выгорание в темпе города, тревога за детей (экраны, школа), ощущение бессмысленности карьеры → мечта: дом на земле, дети без страха, соседи по именам</td>
+          <td>«А работа и доход», «а школа и медицина», страх осуждения, «это секта?»</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>Привет, [Имя] — расскажу, чем занимаюсь: после 40 понял, что жить как раньше не хочу, собрал модель сообщества, где семья сохраняет уровень жизни даже в турбулентность, на земле, с безопасностью и без потери качества. Зову вас с [супруг(а)] в первый круг клуба живой книги — читаем и обсуждаем вместе, без продаж.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], привет! Собрал модель, как жить спокойно с семьёй даже в турбулентные времена — на своей земле, среди своих людей. Написал книгу, запускаю клуб — читаем вживую, без обязательств. Вы с [имя] — те, кого хочу видеть в первом круге. Скину дату?</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">02</span><span class="seg-name">Предприниматели — рост</span></th>
+          <td>30–55 лет, владельцы строительных/сервисных компаний, инвесторы, горизонт 3–7 лет</td>
+          <td>
+            <span class="income">700 000–3 000 000 ₽/мес личный доход</span>
+            <span class="income-note">свободный капитал на инвестиции 10–100+ млн ₽</span>
+          </td>
+          <td>Честность (одни правила для всех), Справедливость, Развитие и рост</td>
+          <td>Сложно найти растущую нишу без переплаты за вход → мечта: войти на старте, пока цена входа минимальна</td>
+          <td>«Почему именно сейчас», юридическая чистота земли, ликвидность вложений</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>[Имя], собрал модель поселения нового типа, где себестоимость строительства в разы ниже за счёт коллективной модели без посредников. Формирую первую волну через личные знакомства, показываю цифры раньше остальных — без продажи, просто книга и обсуждение вживую.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], есть рынок, про который через год-два заговорят все, а сейчас туда почти никто не смотрит. Собрал модель поселения с себестоимостью в разы ниже обычной. Написал книгу, собираю первый круг для клуба — без продаж на этом этапе. Хочу, чтобы ты увидел цифры первым.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">03</span><span class="seg-name">Предприниматели/инвесторы в кризисе</span></th>
+          <td>35–60 лет, собственники бизнеса/бывшие топ-менеджеры, доход нестабилен 1–3 года</td>
+          <td>
+            <span class="income">100 000–400 000 ₽/мес (было 1–5 млн)</span>
+            <span class="income-note">капитал заморожен в активах 20–150 млн ₽, часть в долгах</span>
+          </td>
+          <td>Всё для человека (постулат), Забота (4 круг — потомки), Непричинение вреда</td>
+          <td>Страх потерять уровень жизни, недоверие финансовым советникам → мечта: сохранить уровень жизни семьи при любых внешних условиях</td>
+          <td>«Мне сейчас не до этого», недоверие к новым проектам вообще</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>[Имя], как ты сейчас, с учётом всего? Хочу поговорить не про бизнес, а про то, как сохранить то, что уже есть у семьи, без спекуляций — через объединение с проверенными людьми. Собрал это в книгу, зову на встречу клуба, без обязательств и предоплат.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], знаю, сейчас непросто у многих. Зову на разговор не про деньги, а про то, как сохранить уровень жизни семьи при нестабильности — без рисков, через проверенных людей. Собрал книгу, запускаю клуб, никаких продаж. Хочу, чтобы ты был в первом круге.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">04</span><span class="seg-name">Эксперты без крупного капитала</span></th>
+          <td>28–55 лет, агрономы, врачи, педагоги, инженеры, IT, психологи, найм/фриланс</td>
+          <td>
+            <span class="income">70 000–180 000 ₽/мес</span>
+            <span class="income-note">свободный капитал на вход — до 500 000 ₽ или отсутствует</span>
+          </td>
+          <td>Достоинство каждого, Дар и служение, Развитие и рост</td>
+          <td>Знания есть, признания и применения нет → мечта: быть нужным за то, что умеешь, а не за деньги</td>
+          <td>«А вдруг труд не засчитают», неясность механики пая</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>[Имя], ты же [агроном/врач/инженер] — собираю сообщество, где такие знания, как твои, это ценность номер один и прямая доля, а не наёмный труд. Написал книгу про модель, где вход не через деньги, а через то, что умеешь. Зову на первую встречу клуба, без обязательств.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], ты один из немногих, кто реально понимает [сфера]. Собираю сообщество, где такие знания — прямая доля и статус, вход не через деньги. Написал книгу, зову на первую встречу клуба. Хочу, чтобы ты был в первом круге.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">05</span><span class="seg-name">Думающие / духовно развитые</span></th>
+          <td>25–65 лет, широкий разброс профессий, часто финансово независимы</td>
+          <td>
+            <span class="income">150 000–800 000 ₽/мес</span>
+            <span class="income-note">часть — пассивный доход от 300 000 ₽/мес, деньги не главный мотиватор</span>
+          </td>
+          <td>Единство, Дар и служение, Благодарность</td>
+          <td>Одиночество среди «непонимающих» → мечта: критическая масса единомышленников, путь который масштабируется</td>
+          <td>Настороженность к «гуруизму», чувствуют фальшь</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>[Имя], ты один из немногих, с кем можно говорить не только о бытовом. Собрал модель сообщества именно для таких разговоров и людей — без гуру и готовых истин, живая система, которая сама себя оспаривает. Зову в первый круг клуба живой книги.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], ты один из немногих в моём окружении, с кем можно говорить про то, куда движется мир. Собрал модель сообщества именно для таких людей — без гуру, живая система. Написал книгу, запускаю клуб. Хочу видеть тебя в первом круге.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">06</span><span class="seg-name">Одинокие женщины 35–55</span></th>
+          <td>35–55 лет, часто с детьми, город, разведены или не замужем, социально активны</td>
+          <td>
+            <span class="income">120 000–400 000 ₽/мес личный доход</span>
+            <span class="income-note">часто единственный доход в семье</span>
+          </td>
+          <td>Забота (2 круг — дети), Всё для человека, Единство</td>
+          <td>Ценностное одиночество, страх «не на кого опереться» → мечта: жить на земле в безопасном сообществе, а не одной в квартире</td>
+          <td>«А смысл, если я не собираюсь переезжать»</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>[Имя], привет, как ты? Помнишь, говорили про идею жить не одной в квартире, а в живом сообществе на земле с классными людьми рядом? Мы с Сергеем запускаем клуб — читаем книгу про это, обсуждаем вживую, без давления и продаж.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], помнишь наш разговор про то, что хочется живого тёплого окружения людей с похожими ценностями? Запускаем клуб — читаем вместе книгу про такое сообщество, без всякой продажи. Хочу, чтобы ты была в первом круге.</div>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row" class="col-seg"><span class="seg-num">07</span><span class="seg-name">Активные старшего возраста</span></th>
+          <td>50–70 лет, действующие/недавно вышедшие из профессии специалисты и руководители</td>
+          <td>
+            <span class="income">пенсия 25 000–35 000 ₽/мес + 0–250 000 ₽/мес консультации</span>
+            <span class="income-note">часто владеют недвижимостью на 10–40 млн ₽</span>
+          </td>
+          <td>Память и преемственность, Достоинство каждого, Здоровье и чистота</td>
+          <td>Обесценивание опыта после ухода из активной роли → мечта: остаться нужным, передать опыт напрямую</td>
+          <td>«Мне это уже поздно/незачем»</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок</span>Здравствуйте, [Имя] — работаю над проектом сообщества, где опыт старшего поколения — то, вокруг чего строится обучение молодых, а не то, что списывают. Зову в небольшой круг — читаем и обсуждаем книгу об этом.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], добрый день! Зову на встречу клуба, где читаем книгу о сообществе, в котором опыт старшего поколения — центральная ценность. Внуки и молодые жители учатся напрямую у тех, кто прошёл жизнь. Буду рад видеть вас в первом круге.</div>
+          </td>
+        </tr>
+
+        <tr class="strategic">
+          <th scope="row" class="col-seg"><span class="seg-num">08</span><span class="seg-name">Власть / стремящиеся во власть</span></th>
+          <td>35–65 лет, региональные депутаты, главы районов, муниципальные депутаты первого созыва</td>
+          <td>
+            <span class="income">150 000–500 000 ₽/мес официально</span>
+            <span class="income-note">реальный ресурс — административное влияние, не измеряется доходом</span>
+          </td>
+          <td>Справедливость, Единство, Всё для человека (постулат)</td>
+          <td>Дефицит безопасных инфоповодов, страх ответственности за прецедент → мечта: возглавить показательный проект</td>
+          <td>Страх ассоциации с «сектой», бюрократическая инерция</td>
+          <td>
+            <div class="script-block"><span class="script-label">Звонок (не для первой волны — только когда есть 500 семей и построен ковчег)</span>[Имя], построили сообщество из [N] семей, которое без бюджетных вложений решает вопросы инфраструктуры и безопасности. Не оппозиционная история — снижает нагрузку на территорию. Хочу показать лично.</div>
+            <div class="script-block"><span class="script-label">Телеграм</span>[Имя], добрый день. Работающая модель сообщества из [N] семей, решает вопросы инфраструктуры без нагрузки на бюджет территории. Позитивный пример для региона. Готов показать лично и прислать презентацию.</div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <footer>Составлено на основе АУДИТОРИЯ_КНИГИ.html, главы 13 «Ценности Общества Счастья» и встречи 20.08.26 · печать: A4, альбомная ориентация · 2026</footer>
+
+</div>
